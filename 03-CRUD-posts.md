@@ -241,3 +241,29 @@ public Map<String, Object> findOnePost(@PathVariable("id") String id) {
   return rootSerializer.serializeOne("/posts/" + post.getId(), post, postSerializer);
 }
 ```
+
+## Updating Posts
+
+For full CRUD we need to allow updates to our `POST` model.
+We can do this by adding a new method to our controller:
+
+```java
+@RequestMapping(path = "/posts/{id}", method = RequestMethod.PATCH)
+public Map<String, Object> updatePost(@PathVariable("id") String id, @RequestBody RootParser<Post> parser) {
+  Post existingPost = posts.findOne(id);
+  Post input = parser.getData().getEntity();
+
+  existingPost.setContent(input.getContent());
+  existingPost.setTitle(input.getTitle());
+
+  posts.save(existingPost);
+
+  return rootSerializer.serializeOne("/posts/" + existingPost.getId(), existingPost, postSerializer);
+}
+```
+
+> **NOTE** The JSON API specification prefers `PATCH` requests for updates instead of `PUT` which you may be more familiar with.
+
+We are fetching the `existingPost` from our database so that we get our existing record.
+Then we are explicitly setting `content` and `title` based on the `input`.
+We save our changes, then send out the saved version of our Entity.
