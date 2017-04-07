@@ -137,3 +137,5 @@ If we rerun the cURL command from earlier now we get:
 
 That's what we expect since we haven't started writing any controllers yet.
 So now we're good to get going!
+
+We'll look at building a set of Serializers and Parsers to help us take in JSON API documents and send them back out.
