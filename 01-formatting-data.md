@@ -190,10 +190,10 @@ public class Post implements HasId {
   Integer id;
 
   public String getId() {
-    return this.id.toString();
+    return this.id;
   }
 
-  public void setId(Integer val) {
+  public void setId(String val) {
     this.id = val;
   }
 
@@ -298,7 +298,7 @@ public Map<String, Object> findOnePost() {
   PostSerializer postSerializer = new PostSerializer();
 
   Post post = new Post();
-  post.setId(2);
+  post.setId("2");
   post.setTitle("This is my first Post");
   post.setContent("Lorem lorem lorem");
 
@@ -351,12 +351,12 @@ public Map<String, Object> findAllPost() {
   PostSerializer postSerializer = new PostSerializer();
 
   Post post = new Post();
-  post.setId(2);
+  post.setId("2");
   post.setTitle("This is my first Post");
   post.setContent("Lorem lorem lorem");
 
   Post post2 = new Post();
-  post2.setId(15);
+  post2.setId("15");
   post2.setTitle("This is my second Post");
   post2.setContent("More text goes here");
 
