@@ -203,7 +203,7 @@ public class Post implements HasId {
 
 ## Abstract JsonDataSerializer
 
-Now we need to work on that `JsonDataSerializer` in `src/main/java/com/ryantablada/serializers/RJsonDataSerializerootSerializer.java`:
+Now we need to work on that `JsonDataSerializer` in `src/main/java/com/ryantablada/serializers/JsonDataSerializer.java`:
 
 ```java
 package com.ryantablada.serializers;

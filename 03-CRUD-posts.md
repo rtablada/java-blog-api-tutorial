@@ -197,7 +197,7 @@ Since we'll be using Hibernate's `findAll` to work with many of our data results
 But instead, we can overload our `serializeMany` method to accept an `Iterable` and turn it into our array list.
 
 ```java
-public HashMap<String, Object> serializeMany(String resourceUrl, Iterable<?> data, JsonDataSerializer serializer) {
+public HashMap<String, Object> serializeMany(String resourceUrl, Iterable data, JsonDataSerializer serializer) {
   Iterable<HasId> results = (Iterable<HasId>) data;
   List<HasId> resultsList = new ArrayList<>();
 
@@ -218,5 +218,26 @@ public Map<String, Object> findAllPost() {
   Iterable<HasId> results = posts.findAll();
 
   return rootSerializer.serializeMany("/posts", results, postSerializer);
+}
+```
+
+## Getting One Post By Id
+
+Finally, we need to allow our API to respond to GET requests to get a single record by id.
+For this, we need to start by updating the `@RequestMapping` and method signature for `findOnePost`:
+
+```java
+@RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
+public Map<String, Object> findOnePost(@PathVariable("id") String id)
+```
+
+Now, we need to find a post with our repository:
+
+```java
+@RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
+public Map<String, Object> findOnePost(@PathVariable("id") String id) {
+  Post post = posts.findOne(id);
+
+  return rootSerializer.serializeOne("/posts/" + post.getId(), post, postSerializer);
 }
 ```

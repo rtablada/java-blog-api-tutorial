@@ -23,7 +23,7 @@ public Map<String, Object> storePost(@RequestBody Post post) {
   PostSerializer postSerializer = new PostSerializer();
 
   return rootSerializer.serializeOne(
-    "/posts/" + (String) post.getId(),
+    "/posts/" + post.getId(),
     post,
     postSerializer);
 }
@@ -191,7 +191,7 @@ public Map<String, Object> storePost(@RequestBody RootParser<Post> parser) {
   post.setId(id);
 
   return rootSerializer.serializeOne(
-    "/posts/" + (String) post.getId(),
+    "/posts/" + post.getId(),
     post,
     postSerializer);
 }
