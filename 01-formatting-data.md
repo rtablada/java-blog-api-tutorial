@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PostController {
-  
+
 }
 ```
 
@@ -54,7 +54,7 @@ It will return a `Post` object (remember to import this from `com.ryantablada.en
 
 ```java
 public Post findOnePost() {
-    
+
 }
 ```
 
@@ -71,7 +71,7 @@ public Post findOnePost() {
 ```
 
 Before this will work, we need our new method to actually be used for API requests.
-We can do this by adding an `@RequestMapping` annotation from 
+We can do this by adding an `@RequestMapping` annotation from
 
 ```java
 @RequestMapping(path = "/posts/1", method = RequestMethod.GET)
@@ -84,7 +84,7 @@ public Post findOnePost() {
 }
 ```
 
-> **NOTE** Remember to import the following: 
+> **NOTE** Remember to import the following:
 > * `org.springframework.web.bind.annotation.*;`
 
 Now if we restart our server using `./gradlew buildRun`.
@@ -99,8 +99,8 @@ And we have the output:
 
 ```json
 {
-    "content": "Lorem lorem lorem",
-    "title": "This is my first Post"
+  "content": "Lorem lorem lorem",
+  "title": "This is my first Post"
 }
 ```
 
@@ -124,29 +124,29 @@ import java.util.stream.Collectors;
 
 public class RootSerializer {
 
-    private HashMap<String, Object> makeRoot(String resourceUrl) {
-        HashMap<String, Object> result = new HashMap<>();
-        HashMap<String, Object> links = new HashMap<>();
+  private HashMap<String, Object> makeRoot(String resourceUrl) {
+    HashMap<String, Object> result = new HashMap<>();
+    HashMap<String, Object> links = new HashMap<>();
 
-        links.put("self", resourceUrl);
-        result.put("links", links);
+    links.put("self", resourceUrl);
+    result.put("links", links);
 
-        return result;
-    }
+    return result;
+  }
 
-    public HashMap<String, Object> serializeOne(String resourceUrl, HasId data, JsonDataSerializer serializer) {
-        HashMap<String, Object> result = makeRoot(resourceUrl);
-        result.put("data", serializer.serialize(data));
+  public HashMap<String, Object> serializeOne(String resourceUrl, HasId data, JsonDataSerializer serializer) {
+    HashMap<String, Object> result = makeRoot(resourceUrl);
+    result.put("data", serializer.serialize(data));
 
-        return result;
-    }
+    return result;
+  }
 
-    public HashMap<String, Object> serializeMany(String resourceUrl, List<HasId> data, JsonDataSerializer serializer) {
-        HashMap<String, Object> result = makeRoot(resourceUrl);
-        result.put("data", data.stream().map((e) -> serializer.serialize(e)).collect(Collectors.toList()));
+  public HashMap<String, Object> serializeMany(String resourceUrl, List<HasId> data, JsonDataSerializer serializer) {
+    HashMap<String, Object> result = makeRoot(resourceUrl);
+    result.put("data", data.stream().map((e) -> serializer.serialize(e)).collect(Collectors.toList()));
 
-        return result;
-    }
+    return result;
+  }
 }
 ```
 
@@ -215,21 +215,21 @@ import com.ryantablada.entities.HasId;
 
 
 public abstract class JsonDataSerializer {
-    abstract Map<String, Object> getAttributes(HasId data);
+  abstract Map<String, Object> getAttributes(HasId data);
 
-    abstract Map<String, String> getRelationshipUrls();
+  abstract Map<String, String> getRelationshipUrls();
 
-    abstract String getType();
+  abstract String getType();
 
-    public Map<String, Object> serialize(HasId data) {
-        Map<String, Object> result = new HashMap<>();
+  public Map<String, Object> serialize(HasId data) {
+    Map<String, Object> result = new HashMap<>();
 
-        result.put("type", this.getType());
-        result.put("id", data.getId());
-        result.put("attributes", this.getAttributes(data));
+    result.put("type", this.getType());
+    result.put("id", data.getId());
+    result.put("attributes", this.getAttributes(data));
 
-        return result;
-    }
+    return result;
+  }
 }
 ```
 
@@ -257,7 +257,7 @@ import com.ryantablada.entities.HasId;
 import com.ryantablada.entities.Post;
 
 public class PostSerializer extends JsonDataSerializer {
-  
+
   public String getType() {
     return "posts";
   }
@@ -280,7 +280,7 @@ public class PostSerializer extends JsonDataSerializer {
 
 Here we setup a basic serializer.
 We defined getters for type and attributes.
-**Notice**, we typecasted our `HasId` into an instance of our `Post` entity.
+**Notice**, we casted our `HasId` into an instance of our `Post` entity.
 
 ## Setting Up Our Controller
 
@@ -324,18 +324,18 @@ We have our data serialization.
 
 ```json
 {
-    "data": {
-        "attributes": {
-            "content": "Lorem lorem lorem",
-            "title": "This is my first Post"
-        },
-        "id": "2",
-        "relationships": {},
-        "type": "posts"
+  "data": {
+    "attributes": {
+      "content": "Lorem lorem lorem",
+      "title": "This is my first Post"
     },
-    "links": {
-        "self": "/posts/1"
-    }
+    "id": "2",
+    "relationships": {},
+    "type": "posts"
+  },
+  "links": {
+    "self": "/posts/1"
+  }
 }
 ```
 
@@ -379,29 +379,29 @@ And we'll get the final result!
 
 ```json
 {
-    "data": [
-        {
-            "attributes": {
-                "content": "Lorem lorem lorem",
-                "title": "This is my first Post"
-            },
-            "id": "2",
-            "relationships": {},
-            "type": "posts"
-        },
-        {
-            "attributes": {
-                "content": "More text goes here",
-                "title": "This is my second Post"
-            },
-            "id": "15",
-            "relationships": {},
-            "type": "posts"
-        }
-    ],
-    "links": {
-        "self": "/posts"
+  "data": [
+    {
+      "attributes": {
+        "content": "Lorem lorem lorem",
+        "title": "This is my first Post"
+      },
+      "id": "2",
+      "relationships": {},
+      "type": "posts"
+    },
+    {
+      "attributes": {
+        "content": "More text goes here",
+        "title": "This is my second Post"
+      },
+      "id": "15",
+      "relationships": {},
+      "type": "posts"
     }
+  ],
+  "links": {
+    "self": "/posts"
+  }
 }
 ```
 

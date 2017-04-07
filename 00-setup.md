@@ -102,7 +102,7 @@ curl --request GET \
   --url http://localhost:8080/posts
 ```
 
-This gives us back the following result: 
+This gives us back the following result:
 
 ```json
 {
@@ -116,7 +116,7 @@ This gives us back the following result:
 
 ## Disabling Security (For now)
 
-Since we'll be handling authentication and security in a later tutorial, we'll go to our `build.gradle` file and comment out the line that says: 
+Since we'll be handling authentication and security in a later tutorial, we'll go to our `build.gradle` file and comment out the line that says:
 
 ```
 compile('org.springframework.boot:spring-boot-starter-security')
@@ -127,11 +127,11 @@ If we rerun the cURL command from earlier now we get:
 
 ```json
 {
-    "error": "Not Found",
-    "message": "No message available",
-    "path": "/posts",
-    "status": 404,
-    "timestamp": 1491525377066
+  "error": "Not Found",
+  "message": "No message available",
+  "path": "/posts",
+  "status": 404,
+  "timestamp": 1491525377066
 }
 ```
 
