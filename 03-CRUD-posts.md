@@ -36,7 +36,7 @@ package com.ryantablada.repositories;
 import org.springframework.data.repository.CrudRepository;
 import com.ryantablada.entities.Post;
 
-public interface PostRepository extends CrudRepository<Post, Integer> {
+public interface PostRepository extends CrudRepository<Post, String> {
 
 }
 ```
@@ -267,3 +267,20 @@ public Map<String, Object> updatePost(@PathVariable("id") String id, @RequestBod
 We are fetching the `existingPost` from our database so that we get our existing record.
 Then we are explicitly setting `content` and `title` based on the `input`.
 We save our changes, then send out the saved version of our Entity.
+
+## Deleting Posts
+
+Finally, we can make a controller function to delete a **Post** based on the `id`.
+Here we'll use a `HttpServletResponse` to set our response status code to `204` (no content):
+
+```java
+@RequestMapping(path = "/posts/{id}", method = RequestMethod.DELETE)
+public void deletePost(@PathVariable("id") String id, HttpServletResponse response) {
+  posts.delete(id);
+
+  response.setStatus(204);
+}
+```
+
+Now we have all of our CRUD for Posts done!
+We can now repeat this process for **Comments**, but we'll need to also add relationships so that we can save a **Comment** that belongs to an existing **POST**.
