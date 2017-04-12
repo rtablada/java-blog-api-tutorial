@@ -15,7 +15,7 @@ The API can be used to power this Ember App: https://ember-twiddle.com/642a321b6
 First, we will add `application-dev.properties` to our gitignore file to make sure our sensitive data and personal configuration will not be shared across git repos.
 
 ```bash
-echo "**/application-dev.properties" >> .gitignore
+echo "\n**/application-dev.properties" >> .gitignore
 ```
 
 Next, let's copy our existing `application.properties` file into `application-dev.properties`.
