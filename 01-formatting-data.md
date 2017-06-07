@@ -187,7 +187,7 @@ Let's add this interface and an `id` property to our `Post`:
 public class Post implements HasId {
   String title;
   String content;
-  Integer id;
+  String id;
 
   public String getId() {
     return this.id;
